@@ -1,0 +1,69 @@
+#!/bin/bash
+#AWS EMR Bootstrap script
+#IMPORTANT:
+#The script requires following two steps
+#1)Needs S3 ACCESS_KEY_ID and SECRET_ACCESS_KEY
+#to be put in the script in the place holders given below
+#for boto to be able to read and write data from S3 
+#2)Needs to be copied to S3 and the path is
+#to be put in create-emr-cluster.sh script
+
+
+set -x -e
+
+sudo yum update -y
+sudo yum install -y make automake gcc gcc-c++ kernel-devel
+sudo yum install -y db4
+sudo yum install -y db4-devel
+# Install Anaconda python
+cd /home/hadoop
+
+wget -c https://www.dropbox.com/s/1ju3066bjnxt8we/Anaconda2-2.4.0-Linux-x86_64.sh
+sh Anaconda2-2.4.0-Linux-x86_64.sh -b
+rm -rf Anaconda2-2.4.0-Linux-x86_64.sh
+
+cat <<EOT >> /home/hadoop/.bashrc
+
+export PATH="/home/hadoop/anaconda2/bin:$PATH"
+
+EOT
+
+source /home/hadoop/.bashrc
+
+# Install extra packages
+conda install -y seaborn gensim
+conda install -y -c https://conda.anaconda.org/anaconda boto
+conda install -y -c https://conda.anaconda.org/umairacheema bsddb3
+conda install -y -c https://conda.anaconda.org/umairacheema keepalive
+conda install -y -c https://conda.anaconda.org/umairacheema isodate
+conda install -y -c https://conda.anaconda.org/umairacheema sparqlwrapper
+conda install -y -c https://conda.anaconda.org/umairacheema rdflib
+conda install -y -c https://conda.anaconda.org/umairacheema gutenberg
+conda install -y -c https://conda.anaconda.org/umairacheema pymarc
+conda install -y -c https://conda.anaconda.org/umairacheema pattern
+conda install -y -c https://conda.anaconda.org/umairacheema levenshtein
+
+#install nltk data
+sudo /home/hadoop/anaconda2/bin/python -m nltk.downloader -d /usr/share/nltk_data punkt
+sudo /home/hadoop/anaconda2/bin/python -m nltk.downloader -d /usr/share/nltk_data wordnet
+sudo /home/hadoop/anaconda2/bin/python -m nltk.downloader -d /usr/share/nltk_data stopwords
+
+#install S3 credentials on EMR for boto
+echo -e "[Credentials]\n" >> /home/hadoop/.boto
+echo -e "aws_access_key_id = PUT_S3_ACCESS_KEY_ID_HERE\n" >> /home/hadoop/.boto
+echo -e "aws_secret_access_key = PUT_S3_SECRET_ACCESS_KEY_HERE\n" >> /home/hadoop/.boto
+
+cat <<EOT >> /home/hadoop/configure-spark.sh
+#!/bin/bash
+
+sudo bash -c 'cat <<EOS >> /etc/spark/conf/spark-env.sh
+
+
+export PYSPARK_PYTHON="/home/hadoop/anaconda2/bin/ipython"
+export PYSPARK_DRIVER_PYTHON="/home/hadoop/anaconda2/bin/ipython"
+export PYSPARK_DRIVER_PYTHON_OPTS="notebook --no-browser"
+
+EOS'
+EOT
+
+chmod +x configure-spark.sh
