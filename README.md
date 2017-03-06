@@ -53,7 +53,7 @@ Some approaches take into account n-grams (combination of words) as features whi
 
 Different researchers have tried different machine learning algorithms for authorship attribution. Some of the main algorithms that I found in the papers that I consulted include K-nearest neighbors, Bayesian, Support Vector Machines(SVM), Feed Forward Multilayer Perceptrons (MLP) and ensembles using combination of these algorithms.
 
-In 2007 Bozkurt, Bağlıoğlu and Uyar[2] found that 'Bag of Words' approach with SVM gave very high accuracy. In 2007 Stańczyk and Cyran[1] used ANN and found that highest classification ratio is granted by the exploitation of syntactic textual features.
+In 2007 Bozkurt, Bağlıoğlu and Uyar[2] found that 'Bag of Words' approach with SVM gave very high accuracy. In 2007 Stańczyk and Cyran[1] used ANN and found that highest classification ratio is granted by the exploitation of syntactic textual features.
 
 In 2014 Pratanwanich and Lio[3] have used Supervised Author Topic (SAT) model that is based on probabilistic generative model and has exhibited same performance as Random Forests. 
 
@@ -1234,7 +1234,7 @@ KNN is a non-parametric classification algorithm. It does not make any assumptio
 
 
     Best Parameters: {'n_neighbors': 8} 0.844444444444 [mean: 0.72222, std: 0.07499, params: {'n_neighbors': 2}, mean: 0.78333, std: 0.06708, params: {'n_neighbors': 4}, mean: 0.80000, std: 0.07095, params: {'n_neighbors': 6}, mean: 0.84444, std: 0.08441, params: {'n_neighbors': 8}]
-    Accuracy on training data: 0.91
+  
     Accuracy on test data:     0.83
 
 
@@ -1250,7 +1250,7 @@ Support Vector Machines (SVM) is an extension of Support Vector Classifier. It c
 
 
     Best Parameters: {'C': 0.1} 0.961111111111 [mean: 0.92778, std: 0.03854, params: {'C': 0.001}, mean: 0.95000, std: 0.01845, params: {'C': 0.01}, mean: 0.96111, std: 0.01185, params: {'C': 0.1}, mean: 0.96111, std: 0.01185, params: {'C': 1}, mean: 0.96111, std: 0.01185, params: {'C': 10}, mean: 0.96111, std: 0.01185, params: {'C': 100}, mean: 0.96111, std: 0.01185, params: {'C': 1000}]
-    Accuracy on training data: 1.00
+    
     Accuracy on test data:     0.98
 
 
@@ -1273,7 +1273,7 @@ Where _c_ is class, _d_ denotes document and _t_k_ is the kth term. This therefo
     result = do_classify(clf,parameters,xtrain,ytrain,xtest,ytest)
 
     Best Parameters: {'alpha': 0.01} 0.95 [mean: 0.95000, std: 0.01758, params: {'alpha': 0.01}, mean: 0.85000, std: 0.05717, params: {'alpha': 0.1}, mean: 0.55556, std: 0.05134, params: {'alpha': 0.5}, mean: 0.40556, std: 0.04886, params: {'alpha': 1}]
-    Accuracy on training data: 1.00
+    
     Accuracy on test data:     0.95
 
 
@@ -1289,7 +1289,7 @@ Random Forest is an ensemble method that fits a number of decision tree classifi
 
 
     Best Parameters: {'n_estimators': 40} 0.666666666667 [mean: 0.43333, std: 0.04683, params: {'n_estimators': 10}, mean: 0.56111, std: 0.03237, params: {'n_estimators': 20}, mean: 0.59444, std: 0.05399, params: {'n_estimators': 30}, mean: 0.66667, std: 0.08489, params: {'n_estimators': 40}]
-    Accuracy on training data: 1.00
+    
     Accuracy on test data:     0.60
 
 
@@ -1311,42 +1311,12 @@ Looking at the accuracy results, Multinomial Naive Bayesian and SVM have given t
     
 
 
-    [[3 0 0 0 0 0 0 0 0 0 0 0]
-     [0 7 0 0 0 0 0 0 0 0 0 0]
-     [0 0 2 0 0 0 0 0 0 0 0 0]
-     [2 0 0 5 1 0 0 0 0 0 0 2]
-     [0 0 0 0 5 0 0 0 0 3 0 0]
-     [0 0 0 0 0 3 0 0 0 0 0 0]
-     [0 0 0 0 0 0 6 0 0 0 0 0]
-     [0 0 0 0 0 0 0 7 0 0 0 0]
-     [0 0 0 0 0 0 0 0 5 0 0 0]
-     [0 0 0 0 0 0 0 0 0 2 0 0]
-     [0 0 0 0 0 0 0 0 0 0 2 0]
-     [0 0 0 0 0 0 0 0 0 0 0 5]]
-    Accuracy on training data: 1.00
+    
+    
     Accuracy on test data:     0.87
 
 
 
-    #Print Classification Report
-    print classification_report(ytest,clf.predict(xtest))
-
-                 precision    recall  f1-score   support
-    
-              0       0.60      1.00      0.75         3
-              1       1.00      1.00      1.00         7
-              2       1.00      1.00      1.00         2
-              3       1.00      0.50      0.67        10
-              4       0.83      0.62      0.71         8
-              5       1.00      1.00      1.00         3
-              6       1.00      1.00      1.00         6
-              7       1.00      1.00      1.00         7
-              8       1.00      1.00      1.00         5
-              9       0.40      1.00      0.57         2
-             10       1.00      1.00      1.00         2
-             11       0.71      1.00      0.83         5
-    
-    avg / total       0.91      0.87      0.87        60
     
 
 
@@ -1369,106 +1339,11 @@ Cleaning Gutenberg data took a long time. NLTK provides a subset of Gutenberg co
 5) Can AWS EMR be used as a viable cloud based Big Data platform?
 I have found AWS EMR to be very convenient. EMR clusters with m3.xlarge with 3 nodes are more than enough for most operations but the cleaning stage required 5 EC2 nodes of m3.xlarge. 
 
-### 6. Operational Implementation 
-
-In this phase the model should be saved and used via command line.
-
-
-#### 6.1 Saving the model 
-
-
-    #We can save the model as pickel file
-    from sklearn.externals import joblib
-    clf_linearSVC = LinearSVC(C=0.01)
-    clf_linearSVC.fit(xtrain,ytrain)
-    joblib.dump(clf_linearSVC, './data/svm.pkl')
-    joblib.dump(clf, './data/classifier.pkl')
-    joblib.dump(vectorizer,'./data/vectorizer.pkl')
-
-
-
-
-
-    ['./data/vectorizer.pkl']
-
-
-
-#### 6.2 Script to Load Text File and Give Result 
-
-
-    #This code is given in the scripts folder and should be run on 
-    #via command line
-    #!/usr/bin/env python
-    # This script can be used to detect author's name from sample of his/her works
-    from sklearn.externals import joblib
-    from nltk.corpus import stopwords
-    from nltk.stem import WordNetLemmatizer
-    from nltk.tokenize import word_tokenize
-    import re
-    import sys
-    
-    #Model file path
-    model_file = '../data/classifier.pkl'
-    vectorizer_file = '../data/vectorizer.pkl'
-    # The machine learning model used in this case is only trained with the following authors.
-    famous_authors = ['charles_dickens','william_shakespeare','jane_austen','james_joyce','mark_twain','oscar_wilde','edgar_allan_poe',
-                      'francis_bacon_st_albans','christopher_marlowe','joseph_conrad','agatha_christie','dh_lawrence']
-    #Function : print_help
-    #Purpose : Function to display help message
-    def print_help():
-        print "Usage :"+sys.argv[0]+" <path to sample text file>"
-        print " Where sample text file contains text by one of authors given above"
-    #Function : get_author_text
-    #Purpose : Convert raw text document to tokens
-    def get_author_text(sample_file):
-         try:
-    
-            with open(sample_file,'r') as file:
-                data = file.read()
-         except IOError as e:
-            print "I/O Error".format(e.errno, e.strerror)
-            sys.exit(2)
-    
-         #Set language for stopwords
-         stopwords_ = stopwords.words('english')
-         #Instantiate Lemmatizer
-         wordnet_lemmatizer_ = WordNetLemmatizer()
-         #Clean the sample data
-         contents = unicode(data, 'utf-8')
-         prog = re.compile('[\t\n\r\f\v\d\']',re.UNICODE)
-         contents = re.sub(prog,' ',contents).lower()
-         #Remove punctuations
-         prog=re.compile('[!\"#$%&\'()*+\,-./:;<=>?@[\]^_`{|}~]',re.UNICODE)
-         contents = re.sub(prog,' ',contents)
-         words = word_tokenize(contents)
-         #Remove stop words and punctuations
-         vocab = []
-         for word in words:
-             word=word.strip()
-             if len(word)>1:
-                 if word not in stopwords_:
-                     vocab.append(wordnet_lemmatizer_.lemmatize(word))
-         return vocab
-    
-    #Check input arguments
-    if (len(sys.argv) < 2):
-        print_help()
-        sys.exit(1)
-    
-    text = get_author_text(sys.argv[1])
-    clf = joblib.load(model_file)
-    svm = joblib.load('../data/svm.pkl')
-    vectorizer = joblib.load(vectorizer_file)
-    features = vectorizer.transform(text)
-    nb_prediction= clf.predict(features).tolist()
-    svm_prediction = svm.predict(features).tolist()
-    print nb_prediction
-    print svm_prediction
 
 
 ## References
 
-[1]. Stańczyk, U & Krzysztof, AC 2007, 'Machine learning approach to authorship attribution of literary texts', vol. 1, no. 4, pp. 151-158.
+[1]. Stańczyk, U & Krzysztof, AC 2007, 'Machine learning approach to authorship attribution of literary texts', vol. 1, no. 4, pp. 151-158.
 
 [2]. Bozkurt, D., Baglıoglu, O., & Uyar, E. 2007, 'Authorship Attribution: Performance of Various Features and Classification Methods' Computer and Information Sciences.
 
